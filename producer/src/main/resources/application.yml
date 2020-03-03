@@ -1,0 +1,22 @@
+logging:
+  level:
+    ROOT: WARN
+    com.cinq: INFO
+
+spring:
+  application:
+    real-state-data-producer
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost
+          zk-nodes: localhost
+          replication-factor: 1
+          min-partition-count: 3
+          auto-create-topics: true
+          auto-add-partitions: true
+      bindings:
+        realStateProducerChannel:
+          destination: real-state-topic
+          content-type: application/json

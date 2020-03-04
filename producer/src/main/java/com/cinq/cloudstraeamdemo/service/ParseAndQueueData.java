@@ -7,6 +7,7 @@ import com.cinq.cloudstraeamdemo.provider.PreProcessor;
 import com.cinq.cloudstraeamdemo.provider.SearchDataFileOnDisk;
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
@@ -29,16 +30,23 @@ public class ParseAndQueueData {
     File nextFile;
     while ((nextFile = filesOnDisk.searchNextFile()) != null) {
       try (PreProcessor preProcessor = new PreProcessor(nextFile)) {
-        String[] fields = preProcessor.readLine();
+        String[] fields;
+        while ((fields = preProcessor.readLine()) != null) {
+          if (fields[0].startsWith("created_on")) {
+            continue;
+          }
 
-        Property property = converter.convertTo(fields);
+          Optional.ofNullable(converter.convertTo(fields)).ifPresent(this::sendData);
 
-        boolean sent = realEstateProducerChannel.realEstateProducerChannel().send(MessageBuilder.withPayload(property).build());
-        log.debug("Message sent {}", property.getPlaceName());
-
+        }
       } catch (IOException e) {
         log.error("Error processing file {}", nextFile);
       }
     }
+  }
+
+  private void sendData(final Property property) {
+    boolean sent = realEstateProducerChannel.realEstateProducerChannel().send(MessageBuilder.withPayload(property).build());
+    log.debug("Message sent {}", property.getPlaceName());
   }
 }

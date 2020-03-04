@@ -14,7 +14,7 @@ public class SearchDataFileOnDisk {
   private final String sourceFolder;
   private final Set<String> lastFilesProcessed = new HashSet<>();
 
-  public SearchDataFileOnDisk(@Value("application.demo.source-folder:./source")final String sourceFolder) {
+  public SearchDataFileOnDisk(@Value("${application.demo.source-folder:./source}")final String sourceFolder) {
     this.sourceFolder = sourceFolder;
   }
 

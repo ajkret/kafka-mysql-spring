@@ -20,3 +20,7 @@ spring:
         realEstateProducerChannel:
           destination: real-estate-topic
           content-type: application/json
+
+application:
+  demo:
+    source-folder: ./source

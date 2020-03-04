@@ -35,7 +35,13 @@ public class PreProcessor implements Closeable {
    */
   public String[] readLine() {
     if (stream.hasNextLine()) {
-      return stream.nextLine().split(",");
+      String[] fields = stream.nextLine().split(",");
+
+      // Clean data
+      for(int i=0;i<fields.length;i++) {
+        fields[i] = fields[i].replace("\"","");
+      }
+      return fields;
     }
     return null;
   }

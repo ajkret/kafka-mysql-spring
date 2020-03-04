@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class ConvertProperty {
 
   public Property convertTo(final String[] fields) {
-    if (fields.length < 19) {
+    if (fields.length < 24) {
       log.warn("Line ignored, incorrect number of fields");
       return null;
     }
@@ -17,15 +17,15 @@ public class ConvertProperty {
     String[] location = fields[4].split("[|]");
 
     Property property = new Property();
-    property.setCity(location[3]);
-    property.setState(location[2]);
-    property.setCountry(location[1]);
+    property.setCity(location.length>3?location[3]:null);
+    property.setState(location.length>2?location[2]:null);
+    property.setCountry(location.length>1?location[1]:null);
     property.setCurrency(fields[10]);
     property.setOperation(fields[1]);
     property.setPlaceName(fields[3]);
-    property.setPrice(Double.valueOf(fields[9]));
-    property.setPriceUsd(Double.valueOf(fields[12]));
-    property.setRooms(Integer.valueOf(fields[18]));
+    property.setPrice(fields[9].isEmpty()?0.0:Double.valueOf(fields[9]));
+    property.setPriceUsd(fields[12].isEmpty()?0.0:Double.valueOf(fields[12]));
+    property.setRooms(fields[18].isEmpty()?0:Integer.valueOf(fields[18]));
     property.setType(fields[2]);
 
     return property;

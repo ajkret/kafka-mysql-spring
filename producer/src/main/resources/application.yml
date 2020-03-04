@@ -5,7 +5,7 @@ logging:
 
 spring:
   application:
-    real-state-data-producer
+    real-estate-data-producer
   cloud:
     stream:
       kafka:
@@ -17,6 +17,6 @@ spring:
           auto-create-topics: true
           auto-add-partitions: true
       bindings:
-        realStateProducerChannel:
-          destination: real-state-topic
+        realEstateProducerChannel:
+          destination: real-estate-topic
           content-type: application/json

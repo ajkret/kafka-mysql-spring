@@ -1,6 +1,8 @@
+
 plugins {
 	id 'org.springframework.boot' version '2.2.5.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'com.bmuschko.docker-remote-api' version '6.1.4'
 	id 'java'
 }
 
@@ -15,6 +17,11 @@ repositories {
 ext {
 	set('springCloudVersion', "Hoxton.SR1")
 }
+
+apply plugin: 'com.bmuschko.docker-remote-api'
+
+// Import task types
+import com.bmuschko.gradle.docker.tasks.image.*
 
 dependencies {
     implementation "org.springframework.cloud:spring-cloud-stream"
@@ -35,4 +42,21 @@ dependencyManagement {
 
 test {
 	useJUnitPlatform()
+}
+
+task copyDockerFiles(type: Copy) {
+	description = "Copy Dockerfile and required data to build directory"
+	from 'src/main/docker'
+	from "${project.buildDir}/libs"
+	into { "${project.buildDir}/docker" }
+	include "*"
+	exclude "**/*.yml"
+	exclude "**/*sources.jar"
+}
+
+task buildDocker(type: DockerBuildImage, dependsOn: 'copyDockerFiles') {
+	description = "Package application as Docker image"
+	group = "Docker"
+	inputDir = project.file("${project.buildDir}/docker")
+	tags = ["${project.name}:latest".toString(), "${project.name}:${project.version}".toString()]
 }

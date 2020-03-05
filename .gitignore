@@ -19,8 +19,6 @@ HELP.md
 **/*.iws
 **/*.iml
 **/*.ipr
-**/**/*.zip
-!**/test-source/file.zip
 **/out/
 
 ### VS Code ###

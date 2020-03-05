@@ -21,7 +21,7 @@ public class SearchDataFileOnDiskTest {
   public void shouldRetrieveFirstFile() {
     File result = fixture.searchNextFile();
     assertNotNull(result);
-    assertEquals("file.zip", result.getName());
+    assertEquals("brazil-cities.zip", result.getName());
   }
 
   @Test

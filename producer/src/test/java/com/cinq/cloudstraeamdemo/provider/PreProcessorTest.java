@@ -22,7 +22,7 @@ public class PreProcessorTest {
     try (PreProcessor fixture = new PreProcessor(source, true)) {
       String[] fields;
       while ((fields = fixture.readLine()) != null) {
-        assertEquals(3, fields.length);
+        assertEquals(81, fields.length);
       }
     } catch (IOException e) {
       fail();

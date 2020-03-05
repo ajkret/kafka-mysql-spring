@@ -1,8 +1,8 @@
 package com.cinq.cloudstraeamdemo.service;
 
-import com.cinq.cloudstraeamdemo.converter.ConvertProperty;
-import com.cinq.cloudstraeamdemo.dto.Property;
-import com.cinq.cloudstraeamdemo.messaging.RealEstateProducerChannel;
+import com.cinq.cloudstraeamdemo.converter.ConvertCity;
+import com.cinq.cloudstraeamdemo.dto.City;
+import com.cinq.cloudstraeamdemo.messaging.BrazilCitiesProducerChannel;
 import com.cinq.cloudstraeamdemo.provider.PreProcessor;
 import com.cinq.cloudstraeamdemo.provider.SearchDataFileOnDisk;
 import java.io.File;
@@ -17,19 +17,19 @@ import org.springframework.stereotype.Component;
 public class ParseAndQueueData {
 
   private final SearchDataFileOnDisk filesOnDisk;
-  private final ConvertProperty converter;
-  private final RealEstateProducerChannel realEstateProducerChannel;
+  private final ConvertCity converter;
+  private final BrazilCitiesProducerChannel brazilCitiesProducerChannel;
 
-  public ParseAndQueueData(final SearchDataFileOnDisk filesOnDisk, final ConvertProperty converter, final RealEstateProducerChannel realEstateProducerChannel) {
+  public ParseAndQueueData(final SearchDataFileOnDisk filesOnDisk, final ConvertCity converter, final BrazilCitiesProducerChannel brazilCitiesProducerChannel) {
     this.filesOnDisk = filesOnDisk;
     this.converter = converter;
-    this.realEstateProducerChannel = realEstateProducerChannel;
+    this.brazilCitiesProducerChannel = brazilCitiesProducerChannel;
   }
 
   public void parseFilesAndProduce() {
     File nextFile;
     while ((nextFile = filesOnDisk.searchNextFile()) != null) {
-      try (PreProcessor preProcessor = new PreProcessor(nextFile)) {
+      try (PreProcessor preProcessor = new PreProcessor(nextFile, true)) {
         String[] fields;
         while ((fields = preProcessor.readLine()) != null) {
           if (fields[0].startsWith("created_on")) {
@@ -45,8 +45,8 @@ public class ParseAndQueueData {
     }
   }
 
-  private void sendData(final Property property) {
-    boolean sent = realEstateProducerChannel.realEstateProducerChannel().send(MessageBuilder.withPayload(property).build());
-    log.debug("Message sent {}", property.getPlaceName());
+  private void sendData(final City property) {
+    boolean sent = brazilCitiesProducerChannel.brazilCitiesProducerChannel().send(MessageBuilder.withPayload(property).build());
+    log.debug("Message sent {}", property.getCity());
   }
 }

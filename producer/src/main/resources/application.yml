@@ -5,7 +5,7 @@ logging:
 
 spring:
   application:
-    real-estate-data-producer
+    brazil-cities-data-producer
   cloud:
     stream:
       kafka:
@@ -17,8 +17,8 @@ spring:
           auto-create-topics: true
           auto-add-partitions: true
       bindings:
-        realEstateProducerChannel:
-          destination: real-estate-topic
+        brazilCitiesProducerChannel:
+          destination: brazil-cities-topic
           content-type: application/json
 
 application:

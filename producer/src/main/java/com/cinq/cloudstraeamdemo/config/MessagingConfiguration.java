@@ -1,6 +1,6 @@
 package com.cinq.cloudstraeamdemo.config;
 
-import com.cinq.cloudstraeamdemo.messaging.RealEstateProducerChannel;
+import com.cinq.cloudstraeamdemo.messaging.BrazilCitiesProducerChannel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 
@@ -11,10 +11,10 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
  *
  * See http://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/ for the official Spring Cloud Stream documentation.
  */
-@EnableBinding(value = {RealEstateProducerChannel.class})
+@EnableBinding(value = {BrazilCitiesProducerChannel.class})
 public class MessagingConfiguration {
 
-  @Value("${spring.application.name:real-estate-data-producer}")
+  @Value("${spring.application.name:brazil-cities-data-producer}")
   private String applicationName;
 
 }

@@ -14,12 +14,12 @@ public class PreProcessorTest {
 
   @Before
   public void setUp() {
-    source = new File("./test-source/file.zip");
+    source = new File("./test-source/brazil-cities.zip");
   }
 
   @Test
   public void shouldProcessZipFileAndConsumeAllLines() {
-    try (PreProcessor fixture = new PreProcessor(source)) {
+    try (PreProcessor fixture = new PreProcessor(source, true)) {
       String[] fields;
       while ((fields = fixture.readLine()) != null) {
         assertEquals(3, fields.length);
@@ -31,7 +31,7 @@ public class PreProcessorTest {
 
   @Test
   public void shouldFailToProcessZipFileDueToNullFile() {
-    try (PreProcessor fixture = new PreProcessor(null)) {
+    try (PreProcessor fixture = new PreProcessor(null, false)) {
       fail();
     } catch (IOException e) {
     }
@@ -39,7 +39,7 @@ public class PreProcessorTest {
 
   @Test
   public void shouldFailToProcessZipFileDueToInvalidFile() {
-    try (PreProcessor fixture = new PreProcessor(new File("/tmp/does_not_exist"))) {
+    try (PreProcessor fixture = new PreProcessor(new File("/tmp/does_not_exist"), false)) {
       fail();
     } catch (IOException e) {
     }

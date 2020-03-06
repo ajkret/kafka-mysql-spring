@@ -1,0 +1,73 @@
+version: '3.3'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper:3.4.6
+    ports:
+      - 2181:2181
+    environment:
+      USER: 12345
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      demo_net:
+        aliases: ["zookeeper"]
+
+  kafka:
+    image: wurstmeister/kafka:1.0.0
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
+      KAFKA_TOOLS_LOG4J_LOGLEVEL: ERROR
+      KAFKA_LOG4J_LOGGERS: "kafka=WARN"
+      KAFKA_CREATE_TOPICS: "auditDelivery:1:1"
+    ports:
+      - 9092:9092
+    depends_on:
+      - "zookeeper"
+    networks:
+      demo_net:
+        aliases: ["kafka"]
+
+  # MySQL DB
+  demo-mysql:
+    image: mysql:5.7.20
+    #volumes:
+    #- ../resources/db/manual/sql/:/docker-entrypoint-initdb.d
+    #- ../resources/db/volumes/mysql/:/var/lib/mysql/
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    #    - MYSQL_DATABASE=waittimeapi
+    ports:
+      - 3306:3306
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    networks:
+      demo_net:
+        aliases: ["demo-mysql"]
+
+  producer-app:
+    image: kafka-mysql-spring-producer:latest
+    deploy:
+      replicas: 1
+    environment:
+      - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000
+      - SPRING_PROFILES_ACTIVE=dev,swagger
+      - ENVIRONMENT_DB_URL=demo-mysql
+      - SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS=kafka
+      - SPRING_CLOUD_STREAM_KAFKA_BINDER_ZK_NODES=zookeeper
+    depends_on:
+      - "zookeeper"
+      - "kafka"
+      - "dots-mysql"
+    volumes:
+      - ./producer/source:/home/demoapp/source
+    networks:
+      demo_net:
+
+# Network used by swarm deployment.
+networks:
+  demo_net:
+    external: true
+#   driver: overlay

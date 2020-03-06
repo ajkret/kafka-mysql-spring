@@ -1,0 +1,16 @@
+version: '2'
+services:
+    dots-mysql:
+        extends:
+            file: mysql.yml
+            service: demo-mysql
+    kafka:
+        extends:
+            file: kafka.yml
+            service: kafka
+        environment:
+            - KAFKA_ADVERTISED_HOST_NAME=kafka
+    zookeeper:
+        extends:
+            file: kafka.yml
+            service: zookeeper

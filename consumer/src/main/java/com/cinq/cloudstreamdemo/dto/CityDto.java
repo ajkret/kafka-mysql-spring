@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class City {
+public class CityDto {
 
   private String city;
   private String state;

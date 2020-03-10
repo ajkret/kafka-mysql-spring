@@ -1,10 +1,10 @@
 package com.cinq.cloudstreamdemo.repository;
 
-import com.cinq.cloudstreamdemo.domain.CItyRow;
+import com.cinq.cloudstreamdemo.domain.City;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CityRepository extends JpaRepository<CItyRow, Long> {
+public interface CityRepository extends JpaRepository<City, Long> {
 
-  public List<CItyRow> findAllByStateOrderByState(String state);
+  public List<City> findAllByStateOrderByState(String state);
 }

@@ -1,0 +1,53 @@
+logging:
+  level:
+    ROOT: WARN
+    com.cinq: DEBUG
+
+spring:
+  profiles:
+    active: dev
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+  jackson:
+    serialization.indent_output: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:mem:aggregator;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS demo
+    name: 
+    username: root
+    password: 
+    hikari:
+      auto-commit: false
+  jpa:
+    database-platform: io.github.jhipster.domain.util.FixedH2Dialect
+    database: H2
+    open-in-view: false
+    show-sql: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    properties:
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: true
+      hibernate.hbm2ddl.auto: create
+      hibernate.show_sql: true
+  flyway:
+    enabled: false
+
+server:
+  port: 8086
+  
+environment:
+  db:
+    adminpwd:
+    url:
+

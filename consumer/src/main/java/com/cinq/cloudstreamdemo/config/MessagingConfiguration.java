@@ -9,13 +9,12 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
  *
  * This works out-of-the-box if you use the Docker Compose configuration at "src/main/docker/kafka.yml".
  *
- * See http://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/
- * for the official Spring Cloud Stream documentation.
+ * See http://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/ for the official Spring Cloud Stream documentation.
  */
-@EnableBinding(value = { BrazilCitiesConsumerChannel.class})
+@EnableBinding(value = {BrazilCitiesConsumerChannel.class})
 public class MessagingConfiguration {
 
-    @Value("${spring.application.name:brazil-cities-data-consumer}")
-    private String applicationName;
+  @Value("${spring.application.name:brazil-cities-data-consumer}")
+  private String applicationName;
 
 }

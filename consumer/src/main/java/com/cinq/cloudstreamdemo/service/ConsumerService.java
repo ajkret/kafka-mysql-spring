@@ -14,7 +14,7 @@ public class ConsumerService {
   @StreamListener(BrazilCitiesConsumerChannel.CHANNEL)
   public void consume(final City incoming) {
 
-    log.debug("Messaage received {}", incoming.toString());
+    log.debug("Message received {}", incoming.toString());
 
   }
 

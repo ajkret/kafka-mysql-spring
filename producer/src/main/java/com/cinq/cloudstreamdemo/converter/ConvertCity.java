@@ -9,11 +9,6 @@ import org.springframework.stereotype.Component;
 public class ConvertCity {
 
   public City convertTo(final String[] fields) {
-    if (fields.length < 81) {
-      log.warn("Line ignored, incorrect number of fields");
-      return null;
-    }
-
     City property = new City();
     property.setCity(fields[0]);
     property.setState(fields[1]);

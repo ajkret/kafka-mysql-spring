@@ -60,7 +60,7 @@ services:
     depends_on:
       - "zookeeper"
       - "kafka"
-      - "dots-mysql"
+      - "demo-mysql"
     volumes:
       - ./producer/source:/home/demoapp/source
     networks:
@@ -78,7 +78,7 @@ services:
     depends_on:
       - "zookeeper"
       - "kafka"
-      - "dots-mysql"
+      - "demo-mysql"
     networks:
       demo_net:
 

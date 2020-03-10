@@ -66,6 +66,22 @@ services:
     networks:
       demo_net:
 
+  consumer-app:
+    image: kafka-mysql-spring-consumer:latest
+    deploy:
+      replicas: 1
+    environment:
+      - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000
+      - ENVIRONMENT_DB_URL=demo-mysql
+      - SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS=kafka
+      - SPRING_CLOUD_STREAM_KAFKA_BINDER_ZK_NODES=zookeeper
+    depends_on:
+      - "zookeeper"
+      - "kafka"
+      - "dots-mysql"
+    networks:
+      demo_net:
+
 # Network used by swarm deployment.
 networks:
   demo_net:

@@ -1,12 +1,12 @@
 package com.cinq.cloudstreamdemo;
 
-import io.micrometer.core.instrument.util.StringUtils;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
+import org.springframework.util.StringUtils;
 
 @SpringBootApplication
 @Slf4j
@@ -25,7 +25,7 @@ public class CloudStreamDemoApplication {
     }
     String serverPort = env.getProperty("server.port");
     String contextPath = env.getProperty("server.servlet.context-path");
-    if (StringUtils.isBlank(contextPath)) {
+    if (StringUtils.isEmpty(contextPath)) {
       contextPath = "/";
     }
     String hostAddress = "localhost";

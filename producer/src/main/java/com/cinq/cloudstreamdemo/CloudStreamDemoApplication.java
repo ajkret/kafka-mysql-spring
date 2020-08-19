@@ -14,7 +14,7 @@ public class CloudStreamDemoApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(CloudStreamDemoApplication.class, args);
 		ParseAndQueueData service = context.getBean(ParseAndQueueData.class);
 
-		log.info("Beginning consumer...");
+		log.info("Beginning Producer...");
 		service.parseFilesAndProduce();
 		log.info("Done");
 	}

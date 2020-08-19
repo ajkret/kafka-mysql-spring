@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.5.RELEASE'
+	id 'org.springframework.boot' version '2.0.5.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'com.bmuschko.docker-remote-api' version '6.1.4'
 	id 'java'
@@ -14,7 +14,7 @@ repositories {
 }
 
 ext {
-	set('springCloudVersion', "Hoxton.SR3")
+	set('springCloudVersion', "Finchley.SR1")
 }
 
 apply plugin: 'com.bmuschko.docker-remote-api'
@@ -46,7 +46,7 @@ dependencyManagement {
 }
 
 test {
-	useJUnitPlatform()
+//	useJUnitPlatform()
 }
 
 task copyDockerFiles(type: Copy) {

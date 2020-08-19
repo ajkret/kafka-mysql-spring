@@ -46,7 +46,10 @@ public class ParseAndQueueData {
   }
 
   private void sendData(final City property) {
-    boolean sent = brazilCitiesProducerChannel.brazilCitiesProducerChannel().send(MessageBuilder.withPayload(property).build());
+    boolean sent = brazilCitiesProducerChannel.brazilCitiesProducerChannel()
+                                              .send(MessageBuilder.withPayload(property)
+                                                                  .setHeader("partitionKey", property.getState())
+                                                                  .build());
     log.debug("Message sent {}", property.getCity());
   }
 }

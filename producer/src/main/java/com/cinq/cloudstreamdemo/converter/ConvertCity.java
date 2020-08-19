@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 public class ConvertCity {
 
   public City convertTo(final String[] fields) {
+    if(fields.length<32) {
+      return null;
+    }
     City property = new City();
     property.setCity(fields[0]);
     property.setState(fields[1]);

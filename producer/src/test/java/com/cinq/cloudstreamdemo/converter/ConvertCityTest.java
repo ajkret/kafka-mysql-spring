@@ -36,5 +36,4 @@ public class ConvertCityTest {
     City result = fixture.convertTo(new String[0]);
     assertNull(result);
   }
-
 }

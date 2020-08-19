@@ -1,13 +1,14 @@
 package com.cinq.cloudstreamdemo;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CloudStraeamDemoApplicationTests {
+public class CloudStraeamDemoApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+  @Test
+  public void contextLoads() {
+  }
 
 }

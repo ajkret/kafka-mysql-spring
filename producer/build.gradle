@@ -16,7 +16,7 @@ repositories {
 }
 
 ext {
-	set('springCloudVersion', "Finchley.SR1")
+	set('springCloudVersion', "Finchley.SR4")
 }
 
 apply plugin: 'com.bmuschko.docker-remote-api'
